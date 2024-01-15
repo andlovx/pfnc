@@ -34,6 +34,6 @@ The output is done to stdout in tab-separated table format. Suppose that we test
 
 ```shell
 pfnc -p 4053 -r
-ORIGIN  PORT    PID     PATH
-Client   41750   472583  /usr/bin/nc
+Origin  Port    PID     Path
+Client  41750   472583  /usr/bin/nc
 ```
