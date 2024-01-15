@@ -84,12 +84,12 @@ void Program::parse(int argc, char **argv)
         else if (option.key == "-l" ||
                  option.key == "--local")
         {
-            _options.source.origin = PortOrigin::Local;
+            _options.source.origin = _options.source.origin == PortOrigin::Unspec ? PortOrigin::Local : PortOrigin::Either;
         }
         else if (option.key == "-r" ||
                  option.key == "--remote")
         {
-            _options.source.origin = PortOrigin::Remote;
+            _options.source.origin = _options.source.origin == PortOrigin::Unspec ? PortOrigin::Remote : PortOrigin::Either;
         }
         else
         {
@@ -110,6 +110,7 @@ void Program::parse(int argc, char **argv)
 void Program::run()
 {
     Scanner scanner(_options);
+    scanner.start();
 }
 
 std::string Program::name() const
@@ -137,7 +138,7 @@ void Program::usage()
         << "Options:\n"
         << "  -p,--port=num:  The port number.\n"
         << "  -l,--local:     Port refer to local side.\n"
-        << "  -r,--remote:    Port refer to local side.\n"
+        << "  -r,--remote:    Port refer to foreign side.\n"
         << "  -d,--debug:     Enabled debug mode.\n"
         << "  -v,--verbose:   Be more verbose.\n"
         << "  -h,--help:      This casual help.\n"

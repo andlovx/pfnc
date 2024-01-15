@@ -32,7 +32,7 @@ struct Options
     struct Source
     {
         PortOrigin origin;
-        int port;
+        uint16_t port;
     } source;
 
     struct Output

@@ -19,13 +19,13 @@ pfnc -p num [-l|-r]
 List all clients connected to the HTTPS service.
 
 ```shell
-pfnc -p 443 -l
+pfnc -p 443 -r
 ```
 
 Display information for client connecting from port 32517.
 
 ```shell
-pfnc -p 32517 -r
+pfnc -p 32517 -l
 ```
 
 ### Output
@@ -33,7 +33,7 @@ pfnc -p 32517 -r
 The output is done to stdout in tab-separated table format. Suppose that we test connecting with netcat against our service listening on TCP port 4053 on localhost, then the output might be:
 
 ```shell
-pfnc -p 4053 -l
-PORT    PID     PATH
-41750   472583  /usr/bin/nc
+pfnc -p 4053 -r
+ORIGIN  PORT    PID     PATH
+Client   41750   472583  /usr/bin/nc
 ```
