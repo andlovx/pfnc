@@ -6,7 +6,7 @@ SystemError::SystemError() : SystemError(errno)
 {
 }
 
-SystemError::SystemError(int code) : code(code)
+SystemError::SystemError(ErrorCode code) : code(code)
 {
     message = strerror(code);
 }
