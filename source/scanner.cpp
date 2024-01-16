@@ -2,7 +2,7 @@
 
 #include "scanner.hpp"
 #include "netstat.hpp"
-#include "procfs.hpp"
+#include "process.hpp"
 
 using Source = Options::Source;
 
@@ -33,7 +33,7 @@ void Scanner::start() const
                              std::cout << "Server" << '\t'
                                        << entry.foreign.port << '\t'
                                        << entry.pid << '\t'
-                                       << process.get_filepath() << '\n';
+                                       << Process(entry.pid).get_filepath() << '\n';
                          }
                          if (_options.source.port == entry.foreign.port && (
                              _options.source.origin == PortOrigin::Remote ||
@@ -42,6 +42,6 @@ void Scanner::start() const
                              std::cout << "Client" << '\t'
                                        << entry.local.port << '\t'
                                        << entry.pid << '\t'
-                                       << process.get_filepath() << '\n';
+                                       << Process(entry.pid).get_filepath() << '\n';
                          } });
 }

@@ -1,5 +1,5 @@
-#ifndef PROC_HPP
-#define PROC_HPP
+#ifndef PROCESS_HPP
+#define PROCESS_HPP
 
 #include <string>
 #include <filesystem>
@@ -13,11 +13,11 @@ public:
     std::string get_filename() const;
     std::string get_filepath() const;
 
-    operator std::string() { return path; }
+    operator std::string() { return get_filepath(); }
 
 private:
     void set_path(int pid);
     std::filesystem::path path;
 };
 
-#endif // PROC_HPP
+#endif // PROCESS_HPP

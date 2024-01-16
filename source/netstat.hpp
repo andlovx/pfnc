@@ -1,10 +1,9 @@
 #ifndef NETSTAT_HPP
 #define NETSTAT_HPP
 
-#include <functional>
 #include <iostream>
-
 #include <string>
+#include <functional>
 
 class Netstat
 {

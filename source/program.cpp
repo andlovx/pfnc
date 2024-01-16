@@ -1,6 +1,14 @@
 #include <iostream>
 #include <string>
+
+#if (__linux)
 #include <libgen.h>
+#endif
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#include "win32/basename.hpp"
+#endif
+
 #include "program.hpp"
 #include "scanner.hpp"
 
@@ -133,7 +141,7 @@ void Program::usage()
     std::cout
         << "Program path for network connection\n"
         << "\n"
-        << "Usage: " << name() << " [...options]\n"
+        << "Usage: " << name() << " -p num [...options]\n"
         << "\n"
         << "Options:\n"
         << "  -p,--port=num:  The port number.\n"

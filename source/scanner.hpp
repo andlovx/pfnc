@@ -1,5 +1,5 @@
-#ifndef SCAN_HPP
-#define SCAN_HPP
+#ifndef SCANNER_HPP
+#define SCANNER_HPP
 
 #include "options.hpp"
 
@@ -13,4 +13,4 @@ private:
     const Options &_options;
 };
 
-#endif // SCAN_HPP
+#endif // SCANNER_HPP

@@ -1,5 +1,6 @@
 #include <regex>
 #include <iostream>
+#include <array>
 
 #include "netstat.hpp"
 
@@ -8,8 +9,8 @@ namespace
     class Runner
     {
     public:
-        Runner() : handle(popen("netstat -ntp", "r")) {}
-        ~Runner() { pclose(handle); }
+        Runner() : handle(_popen("netstat -ano", "r")) {}
+        ~Runner() { _pclose(handle); }
 
         operator FILE *() { return handle; }
 
@@ -34,7 +35,7 @@ void Netstat::discover(const std::function<void(const Entry &)> callback) const
     Buffer buffer;
     Entry entry;
 
-    while (std::fgets(buffer.data(), buffer.size(), process))
+    while (std::fgets(buffer.data(), static_cast<int>(buffer.size()), process))
     {
         if (buffer.populate(entry))
         {
@@ -45,7 +46,7 @@ void Netstat::discover(const std::function<void(const Entry &)> callback) const
 
 Buffer::Buffer()
 {
-    regexp = std::regex("(\\w+).*?([.0-9]+):(\\d+)\\s+([.0-9]+):(\\d+).*?(\\d+)/(.*)");
+    regexp = std::regex("(\\w+).*?([\\.0-9]+|\\[[0-9a-f:%]+\\]|\\*):(\\d+|\\*)\\s+([\\.0-9]+|\\[[0-9a-f:%]+\\]|\\*):(\\d+|\\*).*?(\\d+)");
 }
 
 bool Buffer::populate(Netstat::Entry &entry)
@@ -57,9 +58,9 @@ bool Buffer::populate(Netstat::Entry &entry)
     {
         return false;
     }
-    if (matches.size() != 8)
+    if (matches.size() != 7)
     {
-        std::cerr << "Expected 8 matches, got " << matches.size() << std::endl;
+        std::cerr << "Expected 7 matches, got " << matches.size() << std::endl;
         return false;
     }
 
@@ -69,7 +70,6 @@ bool Buffer::populate(Netstat::Entry &entry)
     entry.foreign.addr = matches[4];
     entry.foreign.port = atoi(matches[5].str().c_str());
     entry.pid = atoi(matches[6].str().c_str());
-    entry.program = matches[7];
 
     return true;
 }
