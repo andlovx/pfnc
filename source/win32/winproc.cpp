@@ -3,9 +3,9 @@
 #include <tchar.h>
 #include <tlhelp32.h>
 #include <shlwapi.h>
-
 #include <iostream>
 #include "process.hpp"
+#include "error.hpp"
 
 #pragma warning(disable : 4244)
 
@@ -37,20 +37,6 @@ namespace
 
         return true;
     }
-}
-
-struct ProcessError
-{
-    ProcessError(DWORD code);
-    ~ProcessError();
-
-    LPTSTR message;
-    DWORD code;
-};
-
-std::ostream &operator<<(std::ostream &out, const ProcessError &err)
-{
-    return out << err.message << " (" << err.code << ")";
 }
 
 class ProcessReader
@@ -106,13 +92,13 @@ bool ProcessReader::set_filename1(int pid)
     processHandle = OpenProcess(dwDesiredAccess, FALSE, pid);
     if (!processHandle)
     {
-        std::cerr << "Failed open process " << pid << ": " << ProcessError(GetLastError()) << std::endl;
+        error.write("Failed open process", pid);
         return false;
     }
 
     if (GetModuleFileNameEx(processHandle, NULL, filename, MAX_PATH) == 0)
     {
-        std::cerr << "Failed to get module filename: " << ProcessError(GetLastError()) << std::endl;
+        error.write("Failed to get module filename");
         return false;
     }
 
@@ -127,14 +113,14 @@ bool ProcessReader::set_filename2(int pid)
     processHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (processHandle == INVALID_HANDLE_VALUE)
     {
-        std::cerr << "Could not open process snapshot: " << ProcessError(GetLastError()) << std::endl;
+        error.write("Could not open process snapshot");
         return false;
     }
 
     BOOL bResult = Process32First(processHandle, &pe32);
     if (!bResult)
     {
-        std::cerr << "Could not open first snapshot: " << ProcessError(GetLastError()) << std::endl;
+        error.write("Could not open first snapshot");
     }
 
     while (bResult)
@@ -168,26 +154,6 @@ std::string ProcessReader::get_filename() const
 #endif
 
     return result;
-}
-
-ProcessError::ProcessError(DWORD code) : code(code), message('\0')
-{
-    DWORD dwFlags = FORMAT_MESSAGE_FROM_SYSTEM |
-                    FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                    FORMAT_MESSAGE_IGNORE_INSERTS;
-    DWORD dwLength = FormatMessage(
-        dwFlags,
-        0, code, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&message, 0, 0);
-
-    if (dwLength)
-    {
-        message[dwLength - 3] = '\0';
-    }
-}
-
-ProcessError::~ProcessError()
-{
-    LocalFree(message);
 }
 
 void Process::set_path(int pid)

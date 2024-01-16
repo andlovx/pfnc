@@ -11,6 +11,7 @@
 
 #include "program.hpp"
 #include "scanner.hpp"
+#include "error.hpp"
 
 Program::Program()
 {
@@ -112,6 +113,10 @@ void Program::parse(int argc, char **argv)
     if (_options.runtime.debug)
     {
         std::cout << _options << "\n";
+    }
+    if (_options.runtime.verbose)
+    {
+        error.silent(false);
     }
 }
 

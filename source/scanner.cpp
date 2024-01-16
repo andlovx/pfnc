@@ -19,8 +19,6 @@ void Scanner::start() const
 
     netstat.discover([this](const Netstat::Entry &entry)
                      {
-                         Process process(entry.pid);
-
                          if (_options.runtime.debug)
                          {
                              std::cout << entry << std::endl;
@@ -30,18 +28,20 @@ void Scanner::start() const
                              _options.source.origin == PortOrigin::Local ||
                              _options.source.origin == PortOrigin::Either))
                          {
+                             Process process(entry.pid);                            
                              std::cout << "Server" << '\t'
                                        << entry.foreign.port << '\t'
                                        << entry.pid << '\t'
-                                       << Process(entry.pid).get_filepath() << '\n';
+                                       << process.get_filepath() << '\n';
                          }
                          if (_options.source.port == entry.foreign.port && (
                              _options.source.origin == PortOrigin::Remote ||
                              _options.source.origin == PortOrigin::Either))
                          {
+                             Process process(entry.pid);                            
                              std::cout << "Client" << '\t'
                                        << entry.local.port << '\t'
                                        << entry.pid << '\t'
-                                       << Process(entry.pid).get_filepath() << '\n';
+                                       << process.get_filepath() << '\n';
                          } });
 }
