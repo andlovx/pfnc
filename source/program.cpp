@@ -144,7 +144,7 @@ void Program::version(std::ostream &out) const
 void Program::usage()
 {
     std::cout
-        << "Program path for network connection\n"
+        << "List program path using network connection\n"
         << "\n"
         << "Usage: " << name() << " -p num [...options]\n"
         << "\n"

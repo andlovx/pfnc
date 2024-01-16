@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cerrno>
 #include "error.hpp"
 
 SystemError::SystemError() : SystemError(errno)

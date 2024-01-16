@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <limits.h>
-#include "procfs.hpp"
+#include "process.hpp"
 #include "error.hpp"
 
 void Process::set_path(int pid)
