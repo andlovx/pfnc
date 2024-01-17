@@ -80,6 +80,25 @@ void Program::parse(int argc, char **argv)
             _options.runtime.verbose = true;
         }
         //
+        // Output options:
+        //
+        else if (option.key == "-f")
+        {
+            _options.output.set_format(next().c_str());
+        }
+        else if (option.key == "--output")
+        {
+            _options.output.set_format(option.val);
+        }
+        else if (option.key == "-o")
+        {
+            _options.output.set_listing(next().c_str());
+        }
+        else if (option.key == "--output")
+        {
+            _options.output.set_listing(option.val);
+        }
+        //
         // Source options:
         //
         else if (option.key == "-p")
@@ -149,17 +168,21 @@ void Program::usage()
         << "Usage: " << name() << " -p num [...options]\n"
         << "\n"
         << "Options:\n"
-        << "  -p,--port=num:  The port number.\n"
-        << "  -l,--local:     Port refer to local side.\n"
-        << "  -r,--remote:    Port refer to foreign side.\n"
-        << "  -d,--debug:     Enabled debug mode.\n"
-        << "  -v,--verbose:   Be more verbose.\n"
-        << "  -h,--help:      This casual help.\n"
-        << "  -V:             Show program version.\n"
+        << "  -p,--port=num:    The port number.\n"
+        << "  -l,--local:       Port refer to local side.\n"
+        << "  -r,--remote:      Port refer to foreign side.\n"
+        << "  -f,--format=str:  Output format (table,json,xml).\n"
+        << "  -o,--output=list: Output listing (origin,proto,port,pid,addr,path,all).\n"
+        << "  -d,--debug:       Enabled debug mode.\n"
+        << "  -v,--verbose:     Be more verbose.\n"
+        << "  -h,--help:        This casual help.\n"
+        << "  -V:               Show program version.\n"
         << "\n"
         << "Example:\n"
         << "  " << name() << " -p 43847 -r\n"
         << "  " << name() << " --port=43847 --remote\n"
+        << "  " << name() << " --port=43847 -o path,addr,proto -f json\n"
+        << "  " << name() << " --port=43847 -o all -f json\n"
         << "\n"
         << "Copyright (C) 2023-2024 Xertified AB. "
         << "Released under GNU GPL version 3 license.\n";

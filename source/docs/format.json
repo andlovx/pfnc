@@ -1,0 +1,37 @@
+{
+  "entries": [
+    {
+      "origin": "client",
+      "proto": "tcp",
+      "port": 50022,
+      "pid": 72569,
+      "addr": {
+        "local": { "ip": "127.0.0.1", "port": 50022 },
+        "remote": { "ip": "127.0.0.1", "port": 4746 }
+      },
+      "path": "/usr/bin/nc.openbsd"
+    },
+    {
+      "origin": "server",
+      "proto": "tcp",
+      "port": 60304,
+      "pid": 53628,
+      "addr": {
+        "local": { "ip": "127.0.0.1", "port": 4746 },
+        "remote": { "ip": "127.0.0.1", "port": 60304 }
+      },
+      "path": "/usr/bin/nc.openbsd"
+    },
+    {
+      "origin": "client",
+      "proto": "tcp",
+      "port": 60304,
+      "pid": 53631,
+      "addr": {
+        "local": { "ip": "127.0.0.1", "port": 60304 },
+        "remote": { "ip": "127.0.0.1", "port": 4746 }
+      },
+      "path": "/usr/bin/nc.openbsd"
+    }
+  ]
+}

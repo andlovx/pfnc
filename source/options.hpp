@@ -14,7 +14,9 @@ enum class PortOrigin
 
 enum class OutputFormat
 {
-    Table
+    Table,
+    JSON,
+    XML
 };
 
 struct Option
@@ -38,6 +40,18 @@ struct Options
     struct Output
     {
         OutputFormat format = OutputFormat::Table;
+        struct List
+        {
+            bool origin;
+            bool proto;
+            bool port;
+            bool pid;
+            bool addr;
+            bool path;
+        } list;
+
+        void set_listing(const std::string &list);
+        void set_format(const std::string &format);
     } output;
 
     struct Runtime

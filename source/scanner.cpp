@@ -3,6 +3,7 @@
 #include "scanner.hpp"
 #include "netstat.hpp"
 #include "process.hpp"
+#include "format.hpp"
 
 using Source = Options::Source;
 
@@ -13,35 +14,30 @@ Scanner::Scanner(const Options &options)
 
 void Scanner::start() const
 {
+    std::unique_ptr<Formatter> formatter(Formatter::create(_options.output.format, _options.output.list));
     Netstat netstat;
 
-    std::cout << "Origin\tPort\tPID\tPath\n";
+    formatter->print_header(std::cout);
 
-    netstat.discover([this](const Netstat::Entry &entry)
+    netstat.discover([this, &formatter](const Netstat::Entry &entry)
                      {
-                         if (_options.runtime.debug)
-                         {
+                          if (_options.runtime.debug)
+                          {
                              std::cout << entry << std::endl;
-                         }
+                          }
 
-                         if (_options.source.port == entry.local.port && (
-                             _options.source.origin == PortOrigin::Local ||
-                             _options.source.origin == PortOrigin::Either))
-                         {
-                             Process process(entry.pid);                            
-                             std::cout << "Server" << '\t'
-                                       << entry.foreign.port << '\t'
-                                       << entry.pid << '\t'
-                                       << process.get_filepath() << '\n';
-                         }
-                         if (_options.source.port == entry.foreign.port && (
-                             _options.source.origin == PortOrigin::Remote ||
-                             _options.source.origin == PortOrigin::Either))
-                         {
-                             Process process(entry.pid);                            
-                             std::cout << "Client" << '\t'
-                                       << entry.local.port << '\t'
-                                       << entry.pid << '\t'
-                                       << process.get_filepath() << '\n';
-                         } });
+                          if (_options.source.port == entry.local.port && (
+                              _options.source.origin == PortOrigin::Local ||
+                              _options.source.origin == PortOrigin::Either))
+                          {
+                             formatter->print_entry(std::cout, entry, false);
+                          }
+                          if (_options.source.port == entry.foreign.port && (
+                              _options.source.origin == PortOrigin::Remote ||
+                              _options.source.origin == PortOrigin::Either))
+                          {
+                             formatter->print_entry(std::cout, entry, true);
+                          } });
+
+    formatter->print_footer(std::cout);
 }

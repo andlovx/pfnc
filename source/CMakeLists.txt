@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project (pfnc)
-add_executable(pfnc main.cpp options.hpp options.cpp program.hpp program.cpp scanner.hpp scanner.cpp netstat.hpp process.hpp process.cpp error.hpp error.cpp)
+add_executable(pfnc main.cpp options.hpp options.cpp program.hpp program.cpp scanner.hpp scanner.cpp netstat.hpp process.hpp process.cpp error.hpp error.cpp format.hpp format.cpp)
 
 cmake_policy(SET CMP0076 NEW)
 set_property (TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
