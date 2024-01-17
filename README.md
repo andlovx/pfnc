@@ -1,6 +1,6 @@
-# Program path for network connection (PFNC)
+# Program path by network connection (PFNC)
 
-Cross platform application for resolving binary path of connecting application from its TCP port number. Outputs zero or more paths in table format.
+Cross platform application for resolving binary path of application from its TCP/UDP port number. Outputs application path and related information in selected format.
 
 ## Usage
 
@@ -30,10 +30,14 @@ pfnc -p 32517 -l
 
 ### Output
 
-The output is done to stdout in tab-separated table format. Suppose that we test connecting with netcat against our service listening on TCP port 4053 on localhost, then the output might be:
+The output is done to stdout in tab-separated table format by default. Suppose that we test connecting with netcat against our service listening on TCP port 4053 on localhost, then the output might look like:
 
 ```shell
-pfnc -p 4053 -r
+pfnc -p 4053
 Origin  Port    PID     Path
-Client  41750   472583  /usr/bin/nc
+Client  50022   72569   /usr/bin/nc.openbsd
+Server  60304   53628   /usr/bin/nc.openbsd
+Client  60304   53631   /usr/bin/nc.openbsd
 ```
+
+Other columns and output format can be selected.
