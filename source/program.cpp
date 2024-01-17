@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#if (__linux)
+#if (__linux) || (__APPLE__)
 #include <libgen.h>
 #endif
 
