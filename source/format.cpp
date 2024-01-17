@@ -220,12 +220,54 @@ XmlFormatter::XmlFormatter(const Options::Output::List &list)
 
 void XmlFormatter::print_header(std::ostream &stream)
 {
+    stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    stream << "<entries generator=\"pfnc\">\n";
 }
 
 void XmlFormatter::print_footer(std::ostream &stream)
 {
+    stream << "</entries>\n";
 }
 
 void XmlFormatter::print_entry(std::ostream &stream, const Netstat::Entry &entry, bool local)
 {
+    stream << "  <entry>\n";
+
+    if (list.origin)
+    {
+        stream << "    <origin>" << (local ? "client" : "server") << "</origin>\n";
+    }
+    if (list.proto)
+    {
+        stream << "    <proto>" << entry.proto << "</proto>\n";
+    }
+    if (list.port)
+    {
+        stream << "    <port>" << (local ? entry.local.port : entry.foreign.port) << "</port>\n";
+    }
+
+    if (list.pid)
+    {
+        stream << "    <pid>" << entry.pid << "</pid>\n";
+    }
+    if (list.addr)
+    {
+        stream << "    <addr>\n";
+        stream << "      <local>\n";
+        stream << "        <ip>" << entry.local.addr << "</ip>\n";
+        stream << "        <port>" << entry.local.port << "</ip>\n";
+        stream << "      </local>\n";
+        stream << "      <remote>\n";
+        stream << "        <ip>" << entry.local.addr << "</ip>\n";
+        stream << "        <port>" << entry.local.port << "</ip>\n";
+        stream << "      </remote>\n";
+        stream << "    </addr>\n";
+    }
+    if (list.path)
+    {
+        Process process(entry.pid);
+        stream << "    <path>" << process.get_filepath() << "</path>\n";
+    }
+
+    stream << "  </entry>\n";
 }

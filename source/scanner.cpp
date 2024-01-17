@@ -5,8 +5,6 @@
 #include "process.hpp"
 #include "format.hpp"
 
-using Source = Options::Source;
-
 Scanner::Scanner(const Options &options)
     : _options(options)
 {
