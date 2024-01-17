@@ -8,7 +8,7 @@ namespace
     class Runner
     {
     public:
-        Runner() : handle(popen("netstat -ntp", "r")) {}
+        Runner() : handle(popen("netstat -nptu", "r")) {}
         ~Runner() { pclose(handle); }
 
         operator FILE *() { return handle; }
