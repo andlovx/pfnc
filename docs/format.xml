@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entries generator="pfnc">
+  <entry>
+    <origin>client</origin>
+    <port>50022</port>
+    <pid>72569</pid>
+    <path>/usr/bin/nc.openbsd</path>
+  </entry>
+  <entry>
+    <origin>server</origin>
+    <port>60304</port>
+    <pid>53628</pid>
+    <path>/usr/bin/nc.openbsd</path>
+  </entry>
+  <entry>
+    <origin>client</origin>
+    <port>60304</port>
+    <pid>53631</pid>
+    <path>/usr/bin/nc.openbsd</path>
+  </entry>
+</entries>

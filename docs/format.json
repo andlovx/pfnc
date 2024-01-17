@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "origin": "client",
+      "path": "/usr/bin/nc.openbsd",
+      "pid": 72569,
+      "port": 50022
+    },
+    {
+      "origin": "server",
+      "path": "/usr/bin/nc.openbsd",
+      "pid": 53628,
+      "port": 60304
+    },
+    {
+      "origin": "client",
+      "path": "/usr/bin/nc.openbsd",
+      "pid": 53631,
+      "port": 60304
+    }
+  ]
+}

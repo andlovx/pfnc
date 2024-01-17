@@ -1,0 +1,4 @@
+Origin  Port    PID     Path
+Client  50022   72569   /usr/bin/nc.openbsd
+Server  60304   53628   /usr/bin/nc.openbsd
+Client  60304   53631   /usr/bin/nc.openbsd
