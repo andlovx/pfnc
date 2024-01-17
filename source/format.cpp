@@ -146,6 +146,33 @@ TableFormatter::TableFormatter(const Options::Output::List &list)
 
 void TableFormatter::print_header(std::ostream &stream)
 {
+    if (list.origin)
+    {
+        stream << "Origin\t";
+    }
+    if (list.proto)
+    {
+        stream << "Proto\t";
+    }
+    if (list.port)
+    {
+        stream << "Port\t";
+    }
+
+    if (list.pid)
+    {
+        stream << "PID\t";
+    }
+    if (list.addr)
+    {
+        stream << "Local\tRemote\t";
+    }
+    if (list.path)
+    {
+        stream << "Path\t";
+    }
+
+    stream << "\n";
 }
 
 void TableFormatter::print_footer(std::ostream &stream)
@@ -154,6 +181,36 @@ void TableFormatter::print_footer(std::ostream &stream)
 
 void TableFormatter::print_entry(std::ostream &stream, const Netstat::Entry &entry, bool local)
 {
+    if (list.origin)
+    {
+        stream << (local ? "Client" : "Server")
+               << "\t";
+    }
+    if (list.proto)
+    {
+        stream << entry.proto << "\t";
+    }
+    if (list.port)
+    {
+        stream << (local ? entry.local.port : entry.foreign.port) << "\t";
+    }
+
+    if (list.pid)
+    {
+        stream << entry.pid << "\t";
+    }
+    if (list.addr)
+    {
+        stream << entry.local.addr << ":" << entry.local.port << "\t"
+               << entry.foreign.addr << ":" << entry.foreign.port << "\t";
+    }
+    if (list.path)
+    {
+        Process process(entry.pid);
+        stream << process.get_filepath() << "\t";
+    }
+
+    stream << "\n";
 }
 
 XmlFormatter::XmlFormatter(const Options::Output::List &list)
