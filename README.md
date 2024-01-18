@@ -1,4 +1,4 @@
-# Program path by network connection (PFNC)
+# Path for program using network port (PFNC)
 
 Cross platform application for resolving binary path of application from its TCP/UDP port number. Outputs application path and related information in selected format.
 
