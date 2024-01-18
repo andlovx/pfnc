@@ -39,3 +39,28 @@ void Scanner::start() const
 
     formatter->print_footer(std::cout);
 }
+
+void Scanner::start(const std::function<void(const Entry &)> callback) const
+{
+    Netstat netstat;
+
+    netstat.discover([this, &callback](const Netstat::Entry &entry)
+                     {
+                          if (_options.runtime.debug)
+                          {
+                             std::cout << entry << std::endl;
+                          }
+
+                          if (_options.source.port == entry.local.port && (
+                              _options.source.origin == PortOrigin::Local ||
+                              _options.source.origin == PortOrigin::Either))
+                          {
+                              callback(entry);
+                          }
+                          if (_options.source.port == entry.foreign.port && (
+                              _options.source.origin == PortOrigin::Remote ||
+                              _options.source.origin == PortOrigin::Either))
+                          {
+                              callback(entry);
+                          } });
+}
