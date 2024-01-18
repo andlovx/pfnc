@@ -86,7 +86,7 @@ void Program::parse(int argc, char **argv)
         {
             _options.output.set_format(next().c_str());
         }
-        else if (option.key == "--output")
+        else if (option.key == "--format")
         {
             _options.output.set_format(option.val);
         }
@@ -97,6 +97,26 @@ void Program::parse(int argc, char **argv)
         else if (option.key == "--output")
         {
             _options.output.set_listing(option.val);
+        }
+        else if (option.key == "-T" ||
+                 option.key == "--table")
+        {
+            _options.output.set_format("table");
+        }
+        else if (option.key == "-J" ||
+                 option.key == "--json")
+        {
+            _options.output.set_format("json");
+        }
+        else if (option.key == "-X" ||
+                 option.key == "--xml")
+        {
+            _options.output.set_format("xml");
+        }
+        else if (option.key == "-A" ||
+                 option.key == "--all")
+        {
+            _options.output.set_listing("all");
         }
         //
         // Source options:
@@ -177,6 +197,11 @@ void Program::usage()
         << "  -v,--verbose:     Be more verbose.\n"
         << "  -h,--help:        This casual help.\n"
         << "  -V:               Show program version.\n"
+        << "Alias:\n"
+        << "  -T,--table:       Alias for --format=table\n"
+        << "  -J,--json:        Alias for --format=json\n"
+        << "  -X,--xml:         Alias for --format=xml\n"
+        << "  -A,--all:         Alias for --output=all\n"
         << "\n"
         << "Example:\n"
         << "  " << name() << " -p 43847 -r\n"
