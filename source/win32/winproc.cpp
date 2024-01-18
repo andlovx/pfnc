@@ -91,10 +91,12 @@ void ProcessReader::set_filename(int pid)
 
     if (set_filename1(pid))
     {
+        EnableDebugPrivilege(false);
         return;
     }
     if (set_filename2(pid))
     {
+        EnableDebugPrivilege(false);
         return;
     }
 
