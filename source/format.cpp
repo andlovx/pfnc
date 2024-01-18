@@ -1,5 +1,4 @@
 #include "format.hpp"
-#include "process.hpp"
 
 Formatter::Formatter(const Options::Output::List &list)
     : list(list)
@@ -74,8 +73,7 @@ void JsonFormatter::print_entry(std::ostream &stream, const Netstat::Entry &entr
     }
     if (list.path)
     {
-        Process process(entry.pid);
-        print_value(stream, "path", process.get_filepath());
+        print_value(stream, "path", entry.path);
     }
 
     end_object(stream);
@@ -206,8 +204,7 @@ void TableFormatter::print_entry(std::ostream &stream, const Netstat::Entry &ent
     }
     if (list.path)
     {
-        Process process(entry.pid);
-        stream << process.get_filepath() << "\t";
+        stream << entry.path << "\t";
     }
 
     stream << "\n";
@@ -265,8 +262,7 @@ void XmlFormatter::print_entry(std::ostream &stream, const Netstat::Entry &entry
     }
     if (list.path)
     {
-        Process process(entry.pid);
-        stream << "    <path>" << process.get_filepath() << "</path>\n";
+        stream << "    <path>" << entry.path << "</path>\n";
     }
 
     stream << "  </entry>\n";

@@ -3,6 +3,7 @@
 #include <array>
 
 #include "netstat.hpp"
+#include "process.hpp"
 
 namespace
 {
@@ -70,6 +71,12 @@ bool Buffer::populate(Netstat::Entry &entry)
     entry.foreign.addr = matches[4];
     entry.foreign.port = atoi(matches[5].str().c_str());
     entry.pid = atoi(matches[7].str().c_str());
+
+    if (entry.pid)
+    {
+        Process process(entry.pid);
+        entry.path = process.get_filepath();
+    }
 
     return true;
 }

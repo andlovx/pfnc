@@ -20,6 +20,7 @@ public:
         Address foreign;
         int pid;
         std::string program;
+        std::string path;
         std::string proto;
     };
 
