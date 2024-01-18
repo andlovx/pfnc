@@ -44,12 +44,17 @@ Program::Program(std::string name)
 }
 
 Program::Program(int argc, char **argv)
+    : _name(basename(argv[0]))
 {
     parse(argc, argv);
 }
 
 void Program::parse(int argc, char **argv)
 {
+    if (_name.length() == 0)
+    {
+        _name = basename(argv[0]);
+    }
     if (argc == 1)
     {
         usage();
